@@ -1,0 +1,370 @@
+Create html files under src/main/resources/templates/book folder
+	Right click on templates folder -> New -> Folder -> Folder name: book -> Finish.
+	Right click on book folder -> New -> File -> File name: homePage.html -> Finish
+	Right click on book folder -> New -> File -> File name: bookList.html -> Finish
+	Right click on book folder -> New -> File -> File name: bookDetail.html -> Finish	
+	
+Fill those 3 html files with
+	<!doctype html>
+	<html>
+		<head>
+			<title>Book CRUD</title>
+		</head>
+		<body>
+			
+		</body>
+	</html>
+	
+BookDto Model creation 
+	Open BookDto.java from package com.cca.john.book.models.
+	Create private data in the class.
+		public class Book {
+			private Long bno;
+			private String title;
+			private String author;
+			private Double price;
+		}
+	Generate parameterized and default constructors.
+		Right click inside the class -> Source -> Generate Constructors from Superclass... -> Finish 
+		Right click inside the class -> Source -> Generate Constructors using Fields... -> Finish 
+	Generate Setter and Getter Methods.
+		Right click inside the class -> Source -> Generate Getters and Setters	
+		
+Add Thymeleaf Dependency in the Pom.xml file
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency>
+
+Update Maven Package
+	Right click on pom.xml file. 
+	Maven -> Update Project... -> Select your project is checked, Check 'Force Update of Snapshots/Releases -> Finish 
+
+Home Page html file creation
+	Create a folder 'book' under src/main/resources/templates.
+	Create a file named 'homePage.html' under book folder.
+	<!doctype html>
+	<html>
+		<head>
+			<title>Book App</title>
+		</head>
+		<body>
+			<h1>Spring Boot Book</h1>
+		</body>
+	</html>
+
+Book Name program in HTML UI (using Browser)
+	Open BookUIController.java 
+		
+		Create a method showHomePage in the class.
+			public String showHomePage() {
+				return "/book/homePage.html";
+			}
+		Annotate @Controller above the class BookUIController.
+		Annotate @RequestMapping("/book/ui") above the class BookUIController.
+		Annotate @GetMapping({"","/"}) above the method showHomePage.
+		Import the classes:
+			import org.springframework.stereotype.Controller;
+			import org.springframework.web.bind.annotation.GetMapping;
+			import org.springframework.web.bind.annotation.RequestMapping;
+	Run the program.	
+	Test in Browser
+		Open Browser
+		URL: http://localhost:8080/book/ui
+		
+Send Book Name from BookUIController class to homePage html page using Model.
+ 
+	Open BookUIController.java
+		Change the showHomePage method 
+		@GetMapping({"","/"})
+	public String showHomePage(Model model) {
+		model.addAttribute("myBook","Spring Boot by John");
+		return "/book/homePage.html";
+	}
+	Import Model class:
+		import org.springframework.ui.Model;
+	Open homePage.html file
+	Change the body tag as:
+		<body>
+			<h2 th:text="${myBook}"></h2>
+		</body>
+	Test in Browser
+		Open Browser
+		URL: http://localhost:8080/book/ui
+
+Include Dev Tools dependency
+	Copy following dependency and paste in the pom.xml 
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-devtools</artifactId>
+		<scope>runtime</scope>
+		<optional>true</optional>
+	</dependency>
+	Update Maven Package.
+	Save and Run.
+	
+	
+		
+Read All Books operation in Browser 
+	Open bookList.html from src/main/resources/templates/book folder
+	Update the bookList.html files as 
+	
+		<!doctype html>
+		<html>
+			<head>
+				<title>Books App</title>
+			</head>
+			<body>
+				<table border="2" width="80%">
+					<thead>
+						<tr>
+							<th>Book No</th>
+							<th>Title</th>
+							<th>Author</th>
+							<th>Price</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</body>
+		</html>
+	Open BookUIController.java
+		Add readBooks method
+			@GetMapping("/readbooks")
+			public String readBooks() {
+				return "/book/bookList.html";
+			}
+	Save. Run and test in browser. 
+		Open Browser
+		URL: http://localhost:8080/book/readbooks
+	
+	Bring Data to the book table.
+		Open BookUIController.java
+			Add private BookDBService reference in the controller class.. Annotate with Autowired.
+			@Autowired
+			private BookDBService service;
+		Modify readBooks method as 
+			@GetMapping("/readbooks")
+			public String readBooks(Model model) {
+				List<Book> books = service.readBooks();
+				model.addAttribute("books",books);
+				return "/book/bookList.html";
+			}
+		Import classes.
+			import org.springframework.beans.factory.annotation.Autowired;
+			import org.springframework.ui.Model;
+			import com.cca.john.book.models.Book;
+			import com.cca.john.book.services.BookService;
+		Open bookList.html file from src/main/java/resources/templates/book folder 
+			Modify the tr under the tbody of the table.
+				<tr th:each="book:${books}">
+					<td th:text="${book.bno}"></td>
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.price}"></td>
+					<td>
+						<a href="#">Update</a>
+						<a href="#" onclick="return confirm('Are you sure?')">Delete</a>
+					</td>
+				</tr>
+		Save it. Terminate the program if already running. Test it.
+			Open Browser and test it.
+			URL: http://localhost:8080/book/ui/readbooks 
+			
+		Navigate to book list page from home page.
+			Open homePage.html file from src/main/java/resources/templates/book folder.
+			Include a button.
+				<body>
+					<h1>Book Management System</h1>
+					<h2 th:text="${myBook}"></h2>
+					<button onclick="location.href='/book/readbooks'">Read Books</button>
+				</body>
+			Open bookList.html file from src/main/java/resources/templates/book folder
+			Add h1 tag before the table definition
+				<h1>Book List</h1>
+				
+			Open BookUIController.java
+			Modify the readbooks method as 
+				@GetMapping("/readbooks")
+				public String readBooks(Model model) {
+					List<Book> books = service.readBooks();
+					model.addAttribute("books",books);
+					return "/book/bookList.html";
+				}
+			Keep a home button in the bookList.html file before the table definition.
+				<button onclick="location.href='/book/ui'">Home</button>
+			Save it and Test it in the Browser.
+
+Create Book using Browser UI
+	Open bookList.html
+	Add a button before the table definition.
+		<button onclick="location.href='/book/ui/createbook'">Create Book</button>
+	Open bookDetail.html. Modify it as
+		<!doctype html>
+		<html>
+			<head>
+				<title>Book App</title>
+			</head>
+			<body>
+				<h1>Create Book</h1>
+				<form method="post" th:object="${bookDto}">
+					<table width="60%">
+						<tr>
+							<td>Book No:</td>
+							<td><input th:field="${bookDto.bno}" disabled></td>
+						</tr>
+						<tr>
+							<td>Title:</td>
+							<td><input th:field="${bookDto.title}"></td>
+						</tr>
+						<tr>
+							<td>Author:</td>
+							<td><input th:field="${bookDto.author}"></td>
+						</tr>
+						<tr>
+							<td>Price:</td>
+							<td><input th:field="${bookDto.price}"></td>
+						</tr>
+						<tr>
+							<td>
+								<button type="submit">Submit</button>
+							</td>
+							<td>
+								<a th:href="@{/book/ui/readbooks}">Cancel</a>
+								<a th:href="@{/book/ui}">Home</a>
+							</td>
+						</tr>
+					</table>
+			</body>
+		</html>
+	Open BookUIController.java 
+		Add GetMapping and PostMapping methods for createBook 
+		@GetMapping("/createbook")
+		public String createBook(Model model) {
+			BookDto bookDto = new BookDto();
+			model.addAttribute("bookDto",bookDto);
+			return "/book/bookDetail.html";
+		}
+		@PostMapping("/createbook")
+		public String createBook(@ModelAttribute BookDto bookDto) {
+			Book book = new Book(bookDto.getTitle(),bookDto.getAuthor(),bookDto.getPrice());
+			service.createBook(book);
+			return "redirect:/book/ui/readbooks";
+		}
+	Save it. Test it.
+
+Update Book using Browser UI 
+	Open bookList.html file from src/main/java/resources/templates/book folder 
+		Modify the action section as.
+			<td>
+				<a th:href="@{/book/updatebook(bno=${book.bno})}">Update</a>
+				<a th:href="@{/book/deletebook(bno=${book.bno})}" onclick="return confirm('Are you sure?')">Delete</a>
+			</td>
+	Open bookDetail.html file from src/main/java/resources/templates/book folder 
+		Add this th:if before the form
+			<h1 th:if="${isNew}">Create Book</h1>
+			<h1 th:unless="${isNew}">Update Book</h1>
+	Open BookUIController.java
+		Add the following line before the return statement of the GetMapping of createStudent method 
+			model.addAttribute("isNew",true);
+		Add GetMapping and PostMapping methods for updateBook method
+			@GetMapping("/updatebook")
+			public String updateBook(Model model, @RequestParam Long bno) {
+				Book book = service.getBookByBno(bno);
+				BookDto bookDto = new BookDto();
+				bookDto.setBno(book.getBno());
+				bookDto.setTitle(book.getTitle());
+				bookDto.setAuthor(book.getAuthor());
+				bookDto.setPrice(book.getPrice());
+				model.addAttribute(bookDto);
+				model.addAttribute("isNew",false);
+				return "/book/bookDetail.html";
+			}
+			@PostMapping("/updatebook")
+			public String updateBook(@RequestParam Long bno, @ModelAttribute BookDto bookDto) {
+				Book book = service.getBookByBno(bno);
+				book.setTitle(bookDto.getTitle());
+				book.setAuthor(bookDto.getAuthor());
+				book.setPrice(bookDto.getPrice());
+				service.updateBook(book);
+				return "redirect:/book/ui/readbooks";
+			}
+		Save it. Test it.
+	
+Delete Book using Browser UI.
+	Open BookUIController.java
+	Add GetMapping for the deleteBook method
+	@GetMapping("/deletebook")
+	public String deleteBook(@RequestParam Long bno) {
+		service.deleteBook(bno);
+		return "redirect:/book/ui/readbooks";
+	}
+	Save it. Test it.		
+	
+styles.css
+
+.footer{
+    position: absolute;
+    bottom:0;
+    width:100%;
+    height:40px;
+    background-color: blue;
+    text-align: center;
+    color:white;
+}
+
+all .html files
+
+<!doctype html>
+	<html>
+		<head>
+			<title>Book App</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+			<link rel="stylesheet" href="/css/styles.css">
+			
+		</head>
+		<body>
+					<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+					  <ul class="nav navbar-nav">
+					    <li class="nav-item">
+					      <a class="nav-link" th:href="@{/book/ui}">Home</a>
+					    </li>
+					    <li class="nav-item">
+					      <a class="nav-link" th:href="@{/book/ui/readbooks}">Read Books</a>
+					    </li>
+					    <li class="nav-item">
+					      <a class="nav-link" th:href="@{/book/ui/createbook}">Create Book</a>
+					    </li>
+					  </ul>
+					  <ul class="nav navbar-nav navbar-right">
+					    <li class="nav-item">
+					      <a href="#" class="nav-link">Register</a>
+					    </li>
+					    <li class="nav-item">
+					      <a href="#" class="nav-link">Login</a>
+					    </li>
+					    <li class="nav-item">
+					      <a href="#" class="nav-link">Logout</a>
+					    </li>
+					  </ul>
+					</nav>
+					<div class = "container">
+						<h1>Book Management System</h1>
+						<h2 th:text="${myBook}"></h2>
+					</div>
+					<footer class = "footer">
+					  <div class="container">
+					    <span>All Rights Reserved 2025 John Philip</span>
+					  </div>
+					</footer>
+		</body>
+	</html>
