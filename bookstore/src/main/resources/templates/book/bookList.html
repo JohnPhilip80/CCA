@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<title>Book App</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+		<ul class="nav navbar-nav">
+			<li class="nav-item"><a class="nav-link" th:href="@{/book/ui}">Home</a>
+			</li>
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/book/ui/readbooks}">Read Books</a></li>
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/book/ui/createbook}">Create Book</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li class="nav-item"><a href="#" class="nav-link">Register</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
+		</ul>
+	</nav>
+	<div class="container">
+		<h1>Book List</h1>
+		<h2 th:text="${mySession}"></h2>
+		<!-- <button onclick="location.href='/book/ui'">Home</button>
+		<button onclick="location.href='/book/ui/createbook'">Create Book</button> -->
+		<table class = "table table-striped">
+			<thead>
+				<tr>
+					<th>Book No</th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Price</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book:${books}">
+					<td th:text="${book.bno}"></td>
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.price}"></td>
+					<td>
+						<a class="btn btn-primary" th:href="@{/book/ui/updatebook(bno=${book.bno})}">Update</a>
+						<a class="btn btn-danger" th:href="@{/book/ui/deletebook(bno=${book.bno})}" onclick="return confirm('Are you sure?')">Delete</a>
+						<a class="btn btn-info" th:href="@{/book/ui/readbook(bno=${book.bno})}">View</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer class="footer">
+		<div class="container">
+			<span>All Rights Reserved 2025 John Philip</span>
+		</div>
+	</footer>
+</body>
+</html>
