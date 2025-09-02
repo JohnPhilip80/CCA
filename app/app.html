@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a routerLink="home-page" routerLinkActive="active" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="books-read" routerLinkActive="active" class="nav-link">Read Books</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="book-create" routerLinkActive="active" class="nav-link">Create Book</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="users-read" routerLinkActive="active" class="nav-link">Read Users</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="user-create" routerLinkActive="active" class="nav-link">Create User</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="roles-read" routerLinkActive="active" class="nav-link">Read Roles</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="role-create" routerLinkActive="active" class="nav-link">Create Role</a>
+    </li>
+  </ul>
+    <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a routerLink="register-page" routerLinkActive="active" class="nav-link">Register</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="login-page" routerLinkActive="active" class="nav-link">Login</a>
+    </li>
+    <li class="nav-item">
+      <button (click) = "logoutUser()" class = "btn btn-info"> Logout</button>
+    </li>
+    <li>
+        <a routerLinkActive="active" class="nav-link">Welcome </a>
+    </li>
+  </ul>
+</nav>
+
+<div class = "container">
+<router-outlet></router-outlet>
+</div>
+<footer class = "footer">
+  <div class="container">
+    <span>All Rights Reserved 2025 John Philip</span>
+  </div>
+</footer>
