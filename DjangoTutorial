@@ -1,0 +1,106 @@
+Install Python and Django
+
+Creation of Django Project
+	django-admin startproject MyProjects
+
+Run Django Project Webserver
+	python manage.py runserver
+
+Creation of Django Application
+	python manage.py startapp BookApp
+	
+Adding Application to Project
+	Open settings.py from MyProjects -> INSTALLED_APPS -> 'BookApp'
+	
+Create View in BookApp
+	Open views.py from BookApp 
+		from django.shortcuts import render
+		from django.http import HttpResponse 
+
+		def welcome(request):
+			message = '<h1> Welcome to Bookstore Management System</h1>'
+			return HttpResponse(message)
+
+Add View in URL pattern
+	Open urls.py from MyProjects
+		from django.contrib import admin
+		from django.urls import path
+		from BookApp import views
+
+		urlpatterns = [
+			path('admin/', admin.site.urls),
+			path('welcome',views.welcome)
+		]
+
+Create new application TimeApp, Add to project, create view
+	from django.shortcuts import render
+	from django.http import HttpResponse 
+	import datetime
+
+	def showTime(request):
+		time=datetime.datetime.now()
+		return HttpResponse('<h1> The Time is :' + str(time) + '</h1>')
+		
+Add the TimeApp View in the URL Pattern
+	from django.contrib import admin
+	from django.urls import path
+	from BookApp import views as v1
+	from TimeApp import views as v2
+
+	urlpatterns = [
+		path('admin/', admin.site.urls),
+		path('welcome',v1.welcome),
+		path('showTime',v2.showTime)
+	]
+
+Create urls.py file in BookApp and TimeApp 
+	BookApp -> urls.py
+		from django.urls import path
+		from BookApp import views
+
+		urlpatterns = [
+			path('welcome',views.welcome),
+		]
+	TimeApp -> urls.py
+		from django.urls import path
+		from TimeApp import views
+
+		urlpatterns = [
+			path('time',views.showTime)
+		]
+	MyProjects -> urls.py
+		from django.contrib import admin
+		from django.urls import include, path
+
+		urlpatterns = [
+			path('admin/', admin.site.urls),
+			path('BookApp/', include('BookApp.urls')),
+			path('TimeApp/', include('TimeApp.urls')),
+		]
+
+Rendering HTML files
+
+Create templates/bookapp folder and templates/timeapp folders under MyProjects 
+Open settings.py from MyProjects 
+	from pathlib import Path
+	import os
+
+	# Build paths inside the project like this: BASE_DIR / 'subdir'.
+	BASE_DIR = Path(__file__).resolve().parent.parent
+	TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'templates')
+
+	TEMPLATES = [
+		{
+			'BACKEND': 'django.template.backends.django.DjangoTemplates',
+			'DIRS': [TEMPLATE_DIR],
+			'APP_DIRS': True,
+			'OPTIONS': {
+				'context_processors': [
+					'django.template.context_processors.request',
+					'django.contrib.auth.context_processors.auth',
+					'django.contrib.messages.context_processors.messages',
+				],
+			},
+		},
+	]
+	
