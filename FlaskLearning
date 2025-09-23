@@ -1,0 +1,545 @@
+Create project folder MobileApp
+
+Create mobile_console_store.py 
+	#from mobile_ls_repository import MobileRepository
+	from mobile_db_repository import MobileRepository
+	repo = MobileRepository()
+
+	def showHeading():
+		print("Id".ljust(5),"Brand".ljust(20) , "Owner".ljust(15),"Price".ljust(10))
+
+	def readMobiles():
+		showHeading()
+		mobiles = repo.read_mobiles()
+		for mob in mobiles:
+			print(str(mob["id"]).ljust(5),mob["brand"].ljust(20) , mob["owner"].ljust(15),str(mob["price"]).ljust(10))
+			
+	def createMobile():
+		brand = input("Enter New Mobile Brand:")
+		owner = input("Enter New Mobile Owner:")
+		price = input("Enter New Mobile Price:")
+		mob = {
+				"brand":brand,
+				"owner":owner,
+				"price":price
+			 }
+		print(repo.create_mobile(mob))
+
+	def updateMobile():
+		id = input("Enter Mobile Id to Modify:")
+		brand = input("Enter Updated Mobile Brand:")
+		owner = input("Enter Updated Mobile Owner:")
+		price = input("Enter Updated Mobile Price:")
+		mob = {
+				"id":id,
+				"brand":brand,
+				"owner":owner,
+				"price":price
+			 }
+		print(repo.update_mobile(mob))
+		
+	def deleteMobile():
+		id = input("Enter Mobile Id to Remove:")
+		print(repo.delete_mobile(id))
+
+	def readMobile():
+		id = input("Enter Mobile Id to Read:")
+		print(repo.read_mobile(id))
+		
+	choice = 0
+	while choice!=6:
+		choice = int(input("\n1.Create Mobile \n2.Read Mobile \n3.Update Mobile \n4.Delete Mobile \n5.Mobile Detail \n6.Exit. \nEnter Your Choice:"))
+		if choice == 1:
+			createMobile()
+		elif choice == 2:
+			readMobiles()
+		elif choice == 3:
+			updateMobile()
+		elif choice == 4:
+			deleteMobile()
+		elif choice == 5:
+			readMobile()
+		else:
+			print("Exiting the Program")
+			choice = 6
+
+Create mobile_ls_repository.py 
+	class MobileRepository:
+    def __init__(self):
+        self.mobileList = [
+            {"id":"1001", "brand":"Samsung","owner":"Kalyani","price":"45000"},
+            {"id":"1002", "brand":"Apple","owner":"Sri Devi","price":"67000"},
+            {"id":"1003", "brand":"Redmi","owner":"Shwetha","price":"39000"},
+            {"id":"1004", "brand":"Motorola","owner":"Meena Kumari","price":"15200"}
+        ]
+        self.nextMobileId = 1005
+
+    def read_mobiles(self):
+        return self.mobileList;
+
+    
+    def read_mobile(self,id): 
+        found_mobile = None
+        for mob in self.mobileList:
+            if mob["id"] == str(id):
+                found_mobile = mob
+                break
+        if found_mobile:
+            return found_mobile
+        else:
+            return {"message":"Mobile Not Found"}
+
+    def create_mobile(self,mob):
+        self.mobileList.append(
+        {
+            "id":str(self.nextMobileId),
+            "brand":mob["brand"],
+            "owner":mob["owner"],
+            "price":mob["price"]
+        })
+        self.nextMobileId = self.nextMobileId + 1
+        return {"message":"Mobile Created Successfully"}
+
+    def update_mobile(self,pmob):
+        for mob in self.mobileList:
+            if mob["id"] == pmob["id"]:
+                mob["brand"] = pmob["brand"]
+                mob["owner"] = pmob["owner"]
+                mob["price"] = pmob["price"]
+                break
+        return {"message":"Mobile Updated Sucessfully"}
+
+    def delete_mobile(self,id):
+        found_mobile = False
+        for mob in self.mobileList:
+            if mob["id"] == str(id):
+                found_mobile = True
+                self.mobileList.remove(mob)
+                break
+        if found_mobile:
+            return {"message":"Mobile Deleted Successfully"}
+        else:
+            return {"message":"Mobile Not Found"}
+
+
+Create Table mobile in MySQL
+	CREATE TABLE mobile (id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	brand VARCHAR(30),
+	owner VARCHAR(40),
+	price DECIMAL(10,2));
+
+
+Install mysql 
+	pip install mysql-connector-python
+
+Create file mobile_db_repository.py 
+	import mysql.connector
+
+	class MobileRepository:
+		def open_connection(self):
+			try:
+				self.connection = mysql.connector.connect(
+					host="localhost",
+					user="root",
+					password="Admin@123",
+					database="john_mobile"
+				)
+			except mysql.connector.Error as err:
+				print(f"Error connecting to MySQL: {err}")
+				
+		def __init__(self):
+			pass
+			
+		def read_mobiles(self):
+			self.open_connection()
+			cursor = self.connection.cursor(dictionary=True)
+			try:
+				sql="SELECT id,brand,owner,price FROM mobile"
+				cursor.execute(sql)
+				res=cursor.fetchall()
+				return res
+			except mysql.connector.Error as err:
+				print(f"Error executing query: {err}")
+				self.connection.rollback()
+				return None
+			finally:
+				cursor.close()
+				self.connection.close()
+			return res
+		
+		def create_mobile(self,mob):
+			self.open_connection()
+			cursor = self.connection.cursor(dictionary=True)
+			try:
+				sql="INSERT INTO mobile (brand,owner,price) VALUES (%s,%s,%s)"
+				cursor.execute(sql,(mob["brand"],mob["owner"],mob["price"]))
+				self.connection.commit()
+				return {"message":"Mobile Created Successfully"}
+			except mysql.connector.Error as err:
+				self.connection.rollback()
+				return {"message":f"Error executing insert query: {err}"}
+			finally:
+				cursor.close()
+				self.connection.close()
+		
+		
+		def update_mobile(self,mob):
+			self.open_connection()
+			cursor = self.connection.cursor(dictionary=True)
+			try:
+				sql="UPDATE mobile SET brand=%s, owner=%s, price=%s WHERE id=%s"
+				cursor.execute(sql,(mob["brand"],mob["owner"],mob["price"],mob["id"]))
+				self.connection.commit()
+				return {"message":"Mobile Updated Successfully"}
+			except mysql.connector.Error as err:
+				self.connection.rollback()
+				return {"message":f"Error executing update query: {err}"}
+			finally:
+				cursor.close()
+				self.connection.close()
+
+		def read_mobile(self,id):
+			self.open_connection()
+			cursor = self.connection.cursor(dictionary=True)
+			try:
+				sql="SELECT * FROM mobile WHERE id = %s"
+				cursor.execute(sql,(id,))
+				res=cursor.fetchone()
+				return res
+			except mysql.connector.Error as err:
+				print(f"Error executing read query: {err}")
+				self.connection.rollback()
+				return None
+			finally:
+				cursor.close()
+				self.connection.close()
+			return res
+			
+		def delete_mobile(self,id):
+			self.open_connection()
+			cursor = self.connection.cursor(dictionary=True)
+			try:
+				sql="DELETE FROM mobile WHERE id = %s"
+				cursor.execute(sql,(id,))
+				self.connection.commit()
+				return {"message":"Mobile Deleted Successfully"}
+			except mysql.connector.Error as err:
+				self.connection.rollback()
+				return {"message":f"Error executing Delete query: {err}"}
+			finally:
+				cursor.close()
+				self.connection.close()
+			return res
+			
+
+Command Prompt -> pip install flask
+
+Create file mobile_rest_store.py
+	from flask import Flask,request,jsonify
+	from mobile_db_repository import MobileRepository
+	#from mobile_ls_repository import MobileRepository
+
+	app=Flask(__name__)
+
+	repo = MobileRepository()
+
+	@app.route('/')
+	@app.route('/readMobiles',methods=['GET'])
+	def readMobiles():
+		return jsonify(repo.read_mobiles())
+		
+	@app.route('/createMobile',methods=['POST'])
+	def createBook():
+		repo.create_mobile(request.get_json())
+		return jsonify({"message":"Mobile Created Successfully"})
+
+	@app.route('/updateMobile',methods=['PUT'])
+	def updateBook():
+		repo.update_book(request.get_json())
+		return jsonify({"message":"Mobile Updated Successfully"})
+
+	@app.route('/readMobile/<string:id>',methods=['GET'])
+	def readMobile(id):
+		return jsonify(repo.read_mobile(id))
+
+	@app.route('/deleteMobile/<string:id>',methods=['DELETE'])
+	def deleteMobile(id):
+		repo.delete_mobile(id)
+		return jsonify({"message":"Mobile Deleted Successfully"})
+		
+	if(__name__ == '__main__'):
+		app.run(debug=True)  
+
+Create static and templates folder
+Create styles.css file under static folder
+	@charset "UTF-8";
+	.footer {
+		position: absolute;
+		bottom: 0;
+		width:100%;
+		height: 40px;
+		background-color: blue;
+		text-align: center;
+		color: white;
+	}
+
+Create book-read.html under templates folder
+	<html>
+		<head>
+			<title>Book Management Application</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}" type="text/css">
+		 </head>
+		 <body>
+			<header>
+				<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+					<ul class = "navbar-nav">
+						<li class = "nav-item">
+							<a href="#" class="navbar-brand"> Book Store Management</a>
+						</li>
+						<li class = "nav-item">
+							<a href="{{url_for('readBooks')}}" class="nav-link" >Book List</a>
+						</li>
+					   <li class = "nav-item">
+						   <a href="{{url_for('createBook')}}" class="nav-link" >Add Book</a>
+					   </li>
+					</ul>
+				</nav>
+			</header>
+			<div class="col-md-6 offset-md-3">
+				<h3>Book Detail</h3>
+				<div class = "container">
+					<div class="form-group">
+						<label>Title:</label> {{book.title}}
+					</div>
+					<div class="form-group">
+						<label>Author:</label> {{book.author}}
+					</div>
+					<div class="form-group">
+						<label>Price:</label> {{book.price}}
+					</div>
+				</div>
+			</div>
+			<footer class = "footer">
+				<div class = "container">
+					<span>All Rights Reserved 2025 John Philip</span>
+				</div>
+			</footer>
+		</body>
+	</html>
+
+Create books-read.html in the templates folder
+	<html>
+		<head>
+			<title>Book Management Application</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}" type="text/css">
+		 </head>
+		 <body>
+			<header>
+				<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+					<ul class = "navbar-nav">
+						<li class = "nav-item">
+							<a href="#" class="navbar-brand"> Book Store Management</a>
+						</li>
+						<li class = "nav-item">
+							<a href="{{url_for('readBooks')}}" class="nav-link" >Book List</a>
+						</li>
+					   <li class = "nav-item">
+						   <a href="{{url_for('createBook')}}" class="nav-link" >Add Book</a>
+					   </li>
+					</ul>
+				</nav>
+			</header>
+			<div class = "container">
+				<h2> Book List</h2>
+				<table class = "table table-striped">
+					<thead>
+						<tr>
+							<th> Book No</th>
+							<th> Title</th>
+							<th> Author </th>
+							<th> Price </th>
+							<th> Actions </th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for book in books %}
+						<tr>
+							<td>{{book.bno}}</td>
+							<td>{{book.title}}</td>
+							<td>{{book.author}}</td>
+							<td>{{book.price}}</td>
+							<td>
+								<a class="btn btn-primary" href="{{url_for('updateBook',bno=book.bno)}}">Update</a> &nbsp;&nbsp;&nbsp;&nbsp;
+								<a class="btn btn-danger" href="{{url_for('deleteBook',bno=book.bno)}}">Delete</a> &nbsp;&nbsp;&nbsp;&nbsp;
+								<a class="btn btn-info" href="{{url_for('readBook',bno=book.bno)}}">View</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<footer class = "footer">
+				<div class = "container">
+				<span>All Rights Reserved 2025 John Philip</span>
+				</div>
+			</footer>
+		</body>
+	</html>
+	
+Create book-create.html under the templates folder.
+	<html>
+		<head>
+			<title>Book Management Application</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}" type="text/css">
+		 </head>
+		 <body>
+			<header>
+				<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+					<ul class = "navbar-nav">
+						<li class = "nav-item">
+							<a href="#" class="navbar-brand"> Book Store Management</a>
+						</li>
+						<li class = "nav-item">
+							<a href="{{url_for('readBooks')}}" class="nav-link" >Book List</a>
+						</li>
+					   <li class = "nav-item">
+						   <a href="{{url_for('createBook')}}" class="nav-link" >Add Book</a>
+					   </li>
+					</ul>
+				</nav>
+			</header>
+			<div class="col-md-6 offset-md-3">
+				<h3>Create Book</h3>
+				<form action="" method="post">
+					<div class="form-group">
+						<label for="title">Title:</label>
+						<input type="text" class ="form-control" value="" id = "title"  name = "title">
+					</div>
+					<div class="form-group">
+						<label for="author">Author:</label>
+						<input type="text" class ="form-control" value="" id = "author"  name = "author">
+					</div>
+					<div class="form-group">
+						<label for="price">Price:</label>
+						<input type="text" class ="form-control" value="" id = "price"  name = "price">
+					</div>
+					<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+			</div>
+			<footer class = "footer">
+				<div class = "container">
+					<span>All Rights Reserved 2025 John Philip</span>
+				</div>
+			</footer>
+		</body>
+	</html>
+	
+Create book-update.html under templates folder.
+	<html>
+		<head>
+			<title>Book Management Application</title>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}" type="text/css">
+		 </head>
+		 <body>
+			<header>
+				<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+					<ul class = "navbar-nav">
+						<li class = "nav-item">
+							<a href="#" class="navbar-brand"> Book Store Management</a>
+						</li>
+						<li class = "nav-item">
+							<a href="{{url_for('readBooks')}}" class="nav-link" >Book List</a>
+						</li>
+					   <li class = "nav-item">
+						   <a href="{{url_for('createBook')}}" class="nav-link" >Add Book</a>
+					   </li>
+					</ul>
+				</nav>
+			</header>
+			<div class="col-md-6 offset-md-3">
+				<h3>Update Book</h3>
+				<form action="" method="post">
+					<div class="form-group">
+						<label for="title">Title:</label>
+						<input type="text" class ="form-control" value="{{book.title}}" name = "title">
+					</div>
+					<div class="form-group">
+						<label for="author">Author:</label>
+						<input type="text" class ="form-control" value="{{book.author}}" name = "author">
+					</div>
+					<div class="form-group">
+						<label for="price">Price:</label>
+						<input type="text" class ="form-control" value="{{book.price}}" name = "price">
+					</div>
+					<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+			</div>
+			<footer class = "footer">
+				<div class = "container">
+					<span>All Rights Reserved 2025 John Philip</span>
+				</div>
+			</footer>
+		</body>
+	</html>
+
+
+Create mobile_browser_store.py file 
+	from flask import Flask,render_template,url_for,redirect,request
+	from book_db_repository import BookRepository
+
+	app=Flask(__name__)
+
+	repo = BookRepository(app)
+
+	@app.route('/')
+	@app.route('/readBooks')
+	def readBooks():
+		#return "<h1>Welcome to my Book Application</h1>"
+		return render_template("books_read.html",books=repo.read_books())
+		
+	@app.route('/createBook',methods=['GET','POST'])
+	def createBook():
+		if request.method == 'POST':
+			bk = {
+					"title":request.form['title'],
+					"author":request.form['author'],
+					"price":request.form['price']
+				 }
+			repo.create_book(bk)
+			return redirect(url_for('readBooks'))
+		return render_template("book_create.html")
+
+	@app.route('/updateBook/<string:bno>',methods=['GET','POST'])
+	def updateBook(bno):
+		if request.method == 'POST':
+			bk = {
+					"bno":bno,
+					"title":request.form['title'],
+					"author":request.form['author'],
+					"price":request.form['price']
+				 }
+			repo.update_book(bk)
+			return redirect(url_for('readBooks'))
+		return render_template("book_update.html",book=repo.read_book(bno))
+
+	@app.route('/readBook/<string:bno>')
+	def readBook(bno):
+		return render_template("book_read.html",book=repo.read_book(bno))
+
+	@app.route('/deleteBook/<string:bno>')
+	def deleteBook(bno):
+		repo.delete_book(bno)
+		return redirect(url_for('readBooks'))
+
+	if(__name__ == '__main__'):
+		app.run(debug=True)  
+
+
+
+
+
+				  
