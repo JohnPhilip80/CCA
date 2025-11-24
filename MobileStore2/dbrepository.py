@@ -21,6 +21,27 @@ def read_mobiles():
         connection.close()
     return mobiles
 
+def read_mobile(id):
+    cursor = None
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="Admin@123",
+            database="john_mobile"
+        )
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT id,brand,owner,price FROM mobile where id=%s",(id,))
+        mobile = cursor.fetchone()
+    except mysql.connector.Error as error:
+        print(error)
+    except Exception as err:
+        print(err)
+    finally:
+        cursor.close()
+        connection.close()
+    return mobile
+
 def create_mobile(brand,owner,price):
     cursor = None
     try:
