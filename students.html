@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <style>
+        body{
+            font-family:Arial;
+        }
+        input{
+            margin:5px;
+            padding:5px;
+        }
+        button{
+            padding:6px 10px;
+            margin:5px;
+        }
+        table{
+            border-collapse: collapse;
+            margin-top:20px;
+            width:60%;
+        }
+        th,td{
+            border:1px solid black;
+            padding:8px;
+            text-align:center;
+        }
+        th{
+            color:white;
+            background:grey;
+        }
+        .footer{
+            position: absolute;
+            bottom:0;
+            width:99%;
+            height:40px;
+            background-color: grey;
+            text-align: center;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="margin:20px">Student CRUD Operations</h2>
+    <input type="text" disabled id="studentIndex">
+    <input type="text" id="rollno" placeholder="Student Roll No">
+    <input type="text" id="name" placeholder="Student Name">
+    <input type="text" id="course" placeholder="Course">
+    <button onclick="addStudent()">Add</button>
+    <button onclick="updateStudent()">Update</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="studentData">
+        </tbody>
+    </table>
+    <div class="footer">
+        <span>All Rights Reserved 2025 John Philip</span>
+    </div>
+    <script>
+			let students = [
+				{
+					"rollno":1001,
+					"name":"John Philip",
+					"course":"CSE",
+				},
+				{
+					"rollno":1002,
+					"name":"Bala Murugan",
+					"course":"MCA",
+				},
+				{
+					"rollno":1003,
+					"name":"Dony Franklin",
+					"course":"EEE",
+				}
+			]
+			function addStudent(){
+				let rollno=document.getElementById("rollno").value;
+				let name=document.getElementById("name").value;
+				let course=document.getElementById("course").value;
+
+				let student={
+				"rollno":rollno,
+				"name":name,
+				"course":course
+				};
+
+				students.push(student);
+
+				clearFields();
+				displayStudents();
+			}
+			function displayStudents(){
+				let table="";
+				for(i=0;i<students.length;i++){
+					table = table + 
+						"<tr>" +
+							"<td>" + i + "</td>" +
+							"<td>" + students[i].rollno + "</td>" +
+							"<td>" + students[i].name + "</td>" +
+							"<td>" + students[i].course + "</td>" +
+							"<td>" + 
+								"<button onclick='editStudent(" + i + ")'>Edit</button>" +
+								"<button onclick='deleteStudent(" + i + ")'>Delete</button>" +
+							"</td>" +
+						"</tr>";
+				}
+				document.getElementById("studentData").innerHTML=table;
+				console.log(JSON.stringify(students));
+			}
+			function editStudent(index){
+				let s=students[index];
+				document.getElementById("studentIndex").value=index;
+				document.getElementById("rollno").value=s.rollno;
+				document.getElementById("name").value=s.name;
+				document.getElementById("course").value=s.course;
+			}
+			function updateStudent(){
+				if(document.getElementById("studentIndex").value){
+					let index=document.getElementById("studentIndex").value;
+					students[index].rollno=document.getElementById("rollno").value;
+					students[index].name=document.getElementById("name").value;
+					students[index].course=document.getElementById("course").value;
+					displayStudents();
+					clearFields();
+				}
+				else{
+					alert("Student cannot be updated without edit");
+				}
+			}
+			function deleteStudent(index){
+				students.splice(index,1);
+				displayStudents();
+			}
+			function clearFields(){
+				document.getElementById("rollno").value="";
+				document.getElementById("name").value="";
+				document.getElementById("course").value="";
+				document.getElementById("studentIndex").value="";
+			}
+			displayStudents();
+		</script>
+</body>
+</html>
