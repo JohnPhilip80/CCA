@@ -1,0 +1,110 @@
+package edu.cca.john.javabasics;
+
+public class Demo {
+	public static void main(String[] args) {
+		//System.out.println("Welcome to Java World!");
+		primitiveTypes();
+		//arithmeticOperators();
+		//assignmentOperators();
+		//relationalOperators();
+		//logicalOperators();
+		//unaryOperators();
+		//ternaryOperators();
+	}
+	public static void primitiveTypes() {
+		byte userAge = 30;// 8 bits
+		short employeeCount = 1500;//16 bits
+		int totalScore = 214500; //32 bits
+		long worldPopulation = 80000000000L;//64 bits
+		float productPrice = 4500.50F; //32 bits, upto 7 decimal digits
+		double piValue = 3.141592653589793; //64 bits, upto 15 decimal digits
+		char studentGrade = 'A'; //16 bits
+		boolean isPremiumCustomer = true; // 1 bit (true / false)
+		
+		/*System.out.println("User Age (byte): " + userAge);
+		System.out.println("Employee Count (short): " + employeeCount);
+		System.out.println("Total Score (int): " + totalScore);
+		System.out.println("World Population (long): " + worldPopulation);
+		System.out.println("Product Price (float): " + productPrice);
+		System.out.println("PI Value (double): " + piValue);
+		System.out.println("Student Grade (char): " + studentGrade);
+		System.out.println("Is Premium Customer (boolean): " + isPremiumCustomer);
+		*/
+		System.out.println("Primitive Types");
+		System.out.printf("\n%-15s%-25s%-20s","Data Type","Property","Value");
+		System.out.printf("\n%-15s%-25s%-20s","byte","User Age",userAge);
+		System.out.printf("\n%-15s%-25s%-20s","short","Employee Count",employeeCount);
+		System.out.printf("\n%-15s%-25s%-20s","int","Total Score",totalScore);
+		System.out.printf("\n%-15s%-25s%-20s","long","World Population",worldPopulation);
+		System.out.printf("\n%-15s%-25s%-20s","float","Product Price",productPrice);
+		System.out.printf("\n%-15s%-25s%-20s","double","PI Value",piValue);
+		System.out.printf("\n%-15s%-25s%-20s","char","Student Grade",studentGrade);
+		System.out.printf("\n%-15s%-25s%-20s","boolean","Is Premium Customer",isPremiumCustomer);
+	}
+	public static void arithmeticOperators() {
+		int a=10;
+		int b=3;
+		System.out.println("Arithmetic Operations");
+		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Addition",a,"+",b,"=",a+b);
+		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Subtraction",a,"-",b,"=",a-b);
+		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Multiplication",a,"*",b,"=",a*b);
+		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Division",a,"/",b,"=",a/b);
+		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Modulus",a,"%",b,"=",a%b);
+	}
+	public static void assignmentOperators() {
+		int x = 5;
+		x += 3; // x=x+3
+		x -= 2;// x=x-3
+		System.out.println("Assignment Operations");
+		System.out.println("Value of x is: " + x);
+	}
+	public static void relationalOperators() {
+		/*
+			== (Equal to)
+			!= (Not equal to)
+			> (Greater than)
+			< (Less than)
+			>= (Greater than or equal to)
+			<= (Less than or equal to)
+		*/
+		int x = 10;
+		int y = 20;
+		
+		System.out.println("Relational Operators");
+		System.out.println(x == y); // false
+		System.out.println(x != y); // true
+		System.out.println(x < y);  // true
+	}
+	public static void logicalOperators() {
+		/*
+			&& (Logical AND): Returns true if both conditions are true.
+			|| (Logical OR): Returns true if at least one condition is true.
+			! (Logical NOT): Reverses the boolean value
+		*/
+		boolean eligibleForVote = true;
+		boolean haveVoterId = false;
+		
+		System.out.println("Logical Operators");
+		System.out.println(eligibleForVote && haveVoterId); // false
+		System.out.println(eligibleForVote || haveVoterId); // true
+		System.out.println(!haveVoterId);           // false
+	}
+	public static void unaryOperators() {
+		/*
+			++ (Increment): Increases value by 1.
+			-- (Decrement): Decreases value by 1
+		*/
+		int count = 10;
+		count++; // count is now 11
+		count--; // count goes back to 10
+		System.out.println("Unary Operators");
+		System.out.println("Count = " + count);
+	}
+	public static void ternaryOperators() {
+		// condition ? expression_if_true : expression_if_false;
+		int age = 20;
+		String status = (age >= 18) ? "Adult" : "Minor"; 
+		System.out.println("Ternary Operators:");
+		System.out.println(status); // Prints "Adult"
+	}
+}
