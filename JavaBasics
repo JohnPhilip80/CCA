@@ -1,17 +1,22 @@
 package edu.cca.john.javabasics;
 
+import java.util.Scanner;
+
 public class Demo {
 	public static void main(String[] args) {
 		//System.out.println("Welcome to Java World!");
-		primitiveTypes();
+		//dataTypes();
 		//arithmeticOperators();
 		//assignmentOperators();
 		//relationalOperators();
 		//logicalOperators();
 		//unaryOperators();
 		//ternaryOperators();
+		scanData();
 	}
-	public static void primitiveTypes() {
+	
+	public static void dataTypes() {
+		String userName = "John Philip";
 		byte userAge = 30;// 8 bits
 		short employeeCount = 1500;//16 bits
 		int totalScore = 214500; //32 bits
@@ -21,7 +26,8 @@ public class Demo {
 		char studentGrade = 'A'; //16 bits
 		boolean isPremiumCustomer = true; // 1 bit (true / false)
 		
-		/*System.out.println("User Age (byte): " + userAge);
+		/*System.out.println("User Name (String): " + userName);
+		System.out.println("User Age (byte): " + userAge);
 		System.out.println("Employee Count (short): " + employeeCount);
 		System.out.println("Total Score (int): " + totalScore);
 		System.out.println("World Population (long): " + worldPopulation);
@@ -30,8 +36,10 @@ public class Demo {
 		System.out.println("Student Grade (char): " + studentGrade);
 		System.out.println("Is Premium Customer (boolean): " + isPremiumCustomer);
 		*/
+		
 		System.out.println("Primitive Types");
 		System.out.printf("\n%-15s%-25s%-20s","Data Type","Property","Value");
+		System.out.printf("\n%-15s%-25s%-20s","String","User Name",userName);
 		System.out.printf("\n%-15s%-25s%-20s","byte","User Age",userAge);
 		System.out.printf("\n%-15s%-25s%-20s","short","Employee Count",employeeCount);
 		System.out.printf("\n%-15s%-25s%-20s","int","Total Score",totalScore);
@@ -40,7 +48,9 @@ public class Demo {
 		System.out.printf("\n%-15s%-25s%-20s","double","PI Value",piValue);
 		System.out.printf("\n%-15s%-25s%-20s","char","Student Grade",studentGrade);
 		System.out.printf("\n%-15s%-25s%-20s","boolean","Is Premium Customer",isPremiumCustomer);
+		
 	}
+		
 	public static void arithmeticOperators() {
 		int a=10;
 		int b=3;
@@ -51,6 +61,7 @@ public class Demo {
 		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Division",a,"/",b,"=",a/b);
 		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Modulus",a,"%",b,"=",a%b);
 	}
+	
 	public static void assignmentOperators() {
 		int x = 5;
 		x += 3; // x=x+3
@@ -58,6 +69,7 @@ public class Demo {
 		System.out.println("Assignment Operations");
 		System.out.println("Value of x is: " + x);
 	}
+	
 	public static void relationalOperators() {
 		/*
 			== (Equal to)
@@ -75,6 +87,7 @@ public class Demo {
 		System.out.println(x != y); // true
 		System.out.println(x < y);  // true
 	}
+	
 	public static void logicalOperators() {
 		/*
 			&& (Logical AND): Returns true if both conditions are true.
@@ -89,6 +102,7 @@ public class Demo {
 		System.out.println(eligibleForVote || haveVoterId); // true
 		System.out.println(!haveVoterId);           // false
 	}
+	
 	public static void unaryOperators() {
 		/*
 			++ (Increment): Increases value by 1.
@@ -100,11 +114,51 @@ public class Demo {
 		System.out.println("Unary Operators");
 		System.out.println("Count = " + count);
 	}
+	
 	public static void ternaryOperators() {
 		// condition ? expression_if_true : expression_if_false;
 		int age = 20;
 		String status = (age >= 18) ? "Adult" : "Minor"; 
 		System.out.println("Ternary Operators:");
 		System.out.println(status); // Prints "Adult"
+	}
+	
+	public static void scanData() {
+		String userName = "";
+		byte userAge = 0;
+		short employeeCount = 0;
+		int totalScore = 0;
+		long worldPopulation = 0L;
+		float productPrice = 0.0F;
+		double piValue = 0.0;
+		char studentGrade = ' ';
+		boolean isPremiumCustomer = true;
+		
+		Scanner scanner = new Scanner(System.in);
+        System.out.println("--- Enter Data ---");
+        System.out.println("Enter User Name: ");userName = scanner.nextLine();
+        System.out.print("Enter User Age: "); userAge = scanner.nextByte();
+        System.out.print("Enter Employee Count: "); employeeCount = scanner.nextShort();
+        System.out.print("Enter Total Score: "); totalScore = scanner.nextInt();
+        System.out.print("Enter World Population: "); worldPopulation = scanner.nextLong();
+        System.out.print("Enter Product Price: "); productPrice = scanner.nextFloat();
+        System.out.print("Enter PI Value: "); piValue = scanner.nextDouble();
+        System.out.print("Enter Student Grade: "); studentGrade = scanner.next().charAt(0);
+        System.out.print("Enter Is Premium Customer: "); isPremiumCustomer = scanner.nextBoolean();
+        
+        scanner.nextLine();
+        
+        System.out.println("Scanned Data:");
+		System.out.printf("\n%-15s%-25s%-20s","Data Type","Property","Value");
+		System.out.printf("\n%-15s%-25s%-20s","String","User Name",userName);
+		System.out.printf("\n%-15s%-25s%-20s","byte","User Age",userAge);
+		System.out.printf("\n%-15s%-25s%-20s","short","Employee Count",employeeCount);
+		System.out.printf("\n%-15s%-25s%-20s","int","Total Score",totalScore);
+		System.out.printf("\n%-15s%-25s%-20s","long","World Population",worldPopulation);
+		System.out.printf("\n%-15s%-25s%-20s","float","Product Price",productPrice);
+		System.out.printf("\n%-15s%-25s%-20s","double","PI Value",piValue);
+		System.out.printf("\n%-15s%-25s%-20s","char","Student Grade",studentGrade);
+		System.out.printf("\n%-15s%-25s%-20s","boolean","Is Premium Customer",isPremiumCustomer);
+		scanner.close();
 	}
 }
