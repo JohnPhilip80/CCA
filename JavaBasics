@@ -161,4 +161,154 @@ public class Demo {
 		System.out.printf("\n%-15s%-25s%-20s","boolean","Is Premium Customer",isPremiumCustomer);
 		scanner.close();
 	}
+	public static void typeCasting() {
+		
+		int myInt = 9;
+        // Automatic casting: int to double
+        double myDouble = myInt; 
+
+        System.out.println(myInt);      // Outputs: 9
+        System.out.println(myDouble);   // Outputs: 9.0
+        
+        /*double myDouble = 9.78;
+        // Manual casting: double to int
+        int myInt = (int) myDouble; 
+
+        System.out.println(myDouble);   // Outputs: 9.78
+        System.out.println(myInt);      // Outputs: 9 (decimal is lost)
+        */
+	}
+	public static void mathOperations() {
+		
+		System.out.println("Minimum Value: " + Math.min(10,3));
+		System.out.println("Maximum Value: " + Math.max(10,3));
+		System.out.println("Square Root: " + Math.sqrt(10));
+		System.out.println("Absolute Value: " + Math.abs(-10.23));
+		System.out.println("Power Of: " + Math.pow(10,3));
+		System.out.println("Round Number: " + Math.round(4.6));
+		System.out.println("Ceil Number: " + Math.ceil(4.1));
+		System.out.println("Floor Number: " + Math.floor(4.9));
+		System.out.println("Random Value: " + (int)(Math.random() * 101));
+	}
+	public static void conditionalStatements() {
+		//if statement
+		int age = 10;
+		if(age >= 18) {
+			System.out.println("You are Major");
+			System.out.println("Inside the condition true block!");
+		}
+		System.out.println("Outside the condition!");
+		
+		
+		//if else statement
+		if(age >= 18) {
+			System.out.println("You are Major");
+			System.out.println("Inside the condition true block!");
+		}
+		else {
+			System.out.println("You are Minor");
+			System.out.println("Inside the condition false block!");
+		}
+		System.out.println("Outside the condition!");
+		
+		
+		//else if ladder statement
+		int score = 78; 
+
+        if (score >= 90) {
+            System.out.println("Grade: A");
+        } else if (score >= 80) {
+            System.out.println("Grade: B");
+        } else if (score >= 70) {
+            System.out.println("Grade: C");
+        } else if (score >= 60) {
+            System.out.println("Grade: D");
+        } else {
+            System.out.println("Grade: F (Fail)");
+        }
+        
+		//Nested if statement
+		int a = 10, b=30, c=20;
+		
+		if(a>b) {
+			if(a>c) {
+				System.out.println("A is Greater");
+			}
+			else {
+				System.out.println("C is Greater");
+			}
+		}
+		else {
+			if(b>c) {
+				System.out.println("B is Greater");
+			}
+			else {
+				System.out.println("C is Greater");
+			}
+		}
+		
+		/*
+		int a = 10, b=30, c=50;
+		if(a>=b && a>=c)
+			System.out.println("A is Greater");
+		else if(b>=a && b>=c)
+			System.out.println("B is Greater");
+		else
+			System.out.println("C is Greater");
+		*/
+		
+		//Nested If
+		String name = "Subashini";
+		char gender = 'F';
+		boolean isMarried = false;
+		
+		if(gender == 'F') {
+			if(isMarried) {
+				System.out.println("MRS." + name);
+			}
+			else {
+				System.out.println("Miss." + name);
+			}
+		}
+		else {
+			System.out.println("Mr." + name);
+		}
+		
+		//Switch Statement
+		int day = 4;
+		switch (day) {
+		  case 1:
+		    System.out.println("Monday");
+		    break;
+		  case 2:
+		    System.out.println("Tuesday");
+		    break;
+		  case 3:
+		    System.out.println("Wednesday");
+		    break;
+		  case 4:
+		    System.out.println("Thursday");
+		    break;
+		  case 5:
+		    System.out.println("Friday");
+		    break;
+		  case 6:
+		    System.out.println("Saturday");
+		    break;
+		  case 7:
+		    System.out.println("Sunday");
+		    break;
+		}
+	}
+	
+	public static void loopingStatement() throws InterruptedException{
+		//while loop statement
+		int countdown = 10;
+		while (countdown > 0) {
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println(countdown);
+			countdown--;
+		}
+		System.out.println("Happy New Year!!");
+	}
 }
