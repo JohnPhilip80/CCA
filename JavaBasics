@@ -301,7 +301,8 @@ public class Demo {
 		}
 	}
 	
-	public static void loopingStatement() throws InterruptedException{
+	public static void loopingStatements() throws InterruptedException {
+		/*
 		//while loop statement
 		int countdown = 10;
 		while (countdown > 0) {
@@ -310,5 +311,103 @@ public class Demo {
 			countdown--;
 		}
 		System.out.println("Happy New Year!!");
+		*/
+		
+		/*
+		//Do While loop
+		
+		int i = 6;
+
+        do {
+            System.out.println("Number: " + i);
+            i++; // Increments the counter variable
+        } while (i <= 5);
+        */
+		
+		/*
+		//For Loop
+		for (int i = 0; i < 5; i++) {
+			  System.out.println(i);
+			}
+		*/
+		/*
+		//Nested Loop
+		// Outer loop
+		for (int i = 1; i <= 2; i++) {
+		  System.out.println("Outer: " + i); // Executes 2 times
+		  
+		  // Inner loop
+		  for (int j = 1; j <= 3; j++) {
+		    System.out.println(" Inner: " + j); // Executes 6 times (2 * 3)
+		  }
+		} 
+		*/
+		/*
+		//Multiplication table
+		for (int i = 1; i <= 9; i++) {
+		  for (int j = 1; j <= 10; j++) {
+		    System.out.printf("\n%-3s%-3s%-3s%-3s%-3s", i, "*", j, " = " ,i * j);
+		  }
+		  System.out.println();
+		}
+		*/
+		
+		//https://www.tutorjoes.in/java_programming_tutorial/looping_exercise_programs_in_java#google_vignette
+		
+		//break and continue
+		for (int i = 1; i <= 10; i++) {
+            if(i==5)
+                continue;
+            System.out.println(i);
+            if(i==8)
+                break;
+        }
+	}
+	public static void kaprekarConstant() {
+		Scanner scanner = new Scanner(System.in);
+		int number, asc, desc;
+		System.out.println("Enter a 4 digit Number:"); number = scanner.nextInt();
+		while(number != 6174) {
+			asc = ascendingNumber(number);
+			desc = descendingNumber(number);
+			number = desc - asc;
+			System.out.println(desc);
+			System.out.println(asc);
+			System.out.println("----");
+			System.out.println(number);
+			System.out.println();
+		}
+		scanner.close();
+		
+	}
+	
+	public static int ascendingNumber(int originalNumber) {
+        int sortedNumber = 0;
+	    for (int digitValue = 0; digitValue <= 9; digitValue++) {
+	        int temp = originalNumber;
+	        while (temp > 0) {
+	            int currentDigit = temp % 10;
+	            if (currentDigit == digitValue) {
+	                sortedNumber = (sortedNumber * 10) + currentDigit;
+	            }
+	            temp /= 10;
+	        }
+	    }
+        return sortedNumber;
+	}
+	
+	public static int descendingNumber(int originalNumber) {
+        int sortedNumber = 0;
+    	for (int digitValue = 9; digitValue >= 0; digitValue--) {
+	        int temp = originalNumber;
+	        while (temp > 0) {
+	            int currentDigit = temp % 10;
+	            if (currentDigit == digitValue) {
+	                sortedNumber = (sortedNumber * 10) + currentDigit;
+	            }
+	            temp /= 10;
+	        }
+	    }
+        return sortedNumber;
 	}
 }
