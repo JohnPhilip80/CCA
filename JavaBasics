@@ -3,8 +3,7 @@ package edu.cca.john.javabasics;
 import java.util.Scanner;
 
 public class Demo {
-	public static void main(String[] args) {
-		//System.out.println("Welcome to Java World!");
+	public static void main(String[] args) throws InterruptedException{
 		//dataTypes();
 		//arithmeticOperators();
 		//assignmentOperators();
@@ -12,7 +11,12 @@ public class Demo {
 		//logicalOperators();
 		//unaryOperators();
 		//ternaryOperators();
-		scanData();
+		//scanData();
+		//typeCasting();
+		//mathOperations();
+		//conditionalStatements();
+		//loopingStatements();
+		primeNumber();
 	}
 	
 	public static void dataTypes() {
@@ -34,8 +38,7 @@ public class Demo {
 		System.out.println("Product Price (float): " + productPrice);
 		System.out.println("PI Value (double): " + piValue);
 		System.out.println("Student Grade (char): " + studentGrade);
-		System.out.println("Is Premium Customer (boolean): " + isPremiumCustomer);
-		*/
+		System.out.println("Is Premium Customer (boolean): " + isPremiumCustomer);*/
 		
 		System.out.println("Primitive Types");
 		System.out.printf("\n%-15s%-25s%-20s","Data Type","Property","Value");
@@ -48,9 +51,7 @@ public class Demo {
 		System.out.printf("\n%-15s%-25s%-20s","double","PI Value",piValue);
 		System.out.printf("\n%-15s%-25s%-20s","char","Student Grade",studentGrade);
 		System.out.printf("\n%-15s%-25s%-20s","boolean","Is Premium Customer",isPremiumCustomer);
-		
 	}
-		
 	public static void arithmeticOperators() {
 		int a=10;
 		int b=3;
@@ -61,11 +62,14 @@ public class Demo {
 		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Division",a,"/",b,"=",a/b);
 		System.out.printf("\n%-15s%-5s%-5s%-5s%-5s%-5s","Modulus",a,"%",b,"=",a%b);
 	}
-	
 	public static void assignmentOperators() {
 		int x = 5;
 		x += 3; // x=x+3
 		x -= 2;// x=x-3
+		x *= 4;
+		x /= 5;
+		x %= 2;
+		
 		System.out.println("Assignment Operations");
 		System.out.println("Value of x is: " + x);
 	}
@@ -87,7 +91,6 @@ public class Demo {
 		System.out.println(x != y); // true
 		System.out.println(x < y);  // true
 	}
-	
 	public static void logicalOperators() {
 		/*
 			&& (Logical AND): Returns true if both conditions are true.
@@ -100,30 +103,38 @@ public class Demo {
 		System.out.println("Logical Operators");
 		System.out.println(eligibleForVote && haveVoterId); // false
 		System.out.println(eligibleForVote || haveVoterId); // true
-		System.out.println(!haveVoterId);           // false
+		System.out.println(!haveVoterId);           // true
 	}
-	
 	public static void unaryOperators() {
 		/*
 			++ (Increment): Increases value by 1.
 			-- (Decrement): Decreases value by 1
+			Post Increment & Post Decrement
+			Pre Increment & Pre Decrement
 		*/
 		int count = 10;
-		count++; // count is now 11
+		/*count++; // count is now 11 (count = count + 1 / count += 1)
 		count--; // count goes back to 10
 		System.out.println("Unary Operators");
 		System.out.println("Count = " + count);
+		*/
+		int answer = 0;
+		
+		answer = count-- + --count;
+		
+		System.out.println("Count = " + count);
+		System.out.println("Answer = " + answer);
 	}
-	
 	public static void ternaryOperators() {
+		//   (condition part)?(true part):(false part)
 		// condition ? expression_if_true : expression_if_false;
-		int age = 20;
+		int age = 10;
 		String status = (age >= 18) ? "Adult" : "Minor"; 
 		System.out.println("Ternary Operators:");
 		System.out.println(status); // Prints "Adult"
 	}
-	
 	public static void scanData() {
+		Scanner scanner = new Scanner(System.in);
 		String userName = "";
 		byte userAge = 0;
 		short employeeCount = 0;
@@ -134,8 +145,7 @@ public class Demo {
 		char studentGrade = ' ';
 		boolean isPremiumCustomer = true;
 		
-		Scanner scanner = new Scanner(System.in);
-        System.out.println("--- Enter Data ---");
+		System.out.println("--- Enter Data ---");
         System.out.println("Enter User Name: ");userName = scanner.nextLine();
         System.out.print("Enter User Age: "); userAge = scanner.nextByte();
         System.out.print("Enter Employee Count: "); employeeCount = scanner.nextShort();
@@ -163,44 +173,63 @@ public class Demo {
 	}
 	public static void typeCasting() {
 		
-		int myInt = 9;
+		/*int myInt = 9;
         // Automatic casting: int to double
         double myDouble = myInt; 
 
         System.out.println(myInt);      // Outputs: 9
         System.out.println(myDouble);   // Outputs: 9.0
-        
-        /*double myDouble = 9.78;
+        */
+		
+        double myDouble = 9.78;
         // Manual casting: double to int
-        int myInt = (int) myDouble; 
+        int myInt = (int)myDouble; 
 
         System.out.println(myDouble);   // Outputs: 9.78
         System.out.println(myInt);      // Outputs: 9 (decimal is lost)
-        */
+        
 	}
 	public static void mathOperations() {
-		
 		System.out.println("Minimum Value: " + Math.min(10,3));
 		System.out.println("Maximum Value: " + Math.max(10,3));
-		System.out.println("Square Root: " + Math.sqrt(10));
+		System.out.println("Square Root: " + Math.sqrt(121));
 		System.out.println("Absolute Value: " + Math.abs(-10.23));
-		System.out.println("Power Of: " + Math.pow(10,3));
-		System.out.println("Round Number: " + Math.round(4.6));
+		System.out.println("Power Of: " + Math.pow(2,8));
+		System.out.println("Round Number: " + Math.round(4.5));
 		System.out.println("Ceil Number: " + Math.ceil(4.1));
 		System.out.println("Floor Number: " + Math.floor(4.9));
-		System.out.println("Random Value: " + (int)(Math.random() * 101));
+		System.out.printf("%-20s%-10.2f","Random Value: " ,Math.random() * 101);
 	}
 	public static void conditionalStatements() {
-		//if statement
-		int age = 10;
+		/*
+		if Statement
+			
+			if (condition) {
+				block of code to be executed if the condition is true
+			}
+		*/
+		
+		/*
+		int age = 20;
 		if(age >= 18) {
 			System.out.println("You are Major");
 			System.out.println("Inside the condition true block!");
 		}
 		System.out.println("Outside the condition!");
+		*/
 		
 		
-		//if else statement
+		/*
+		if else statement
+		
+			if (condition) {
+  		 		block of code to be executed if the condition is true
+			} else {
+  		 		block of code to be executed if the condition is false
+			}
+		*/
+		
+		/*int age = 20;
 		if(age >= 18) {
 			System.out.println("You are Major");
 			System.out.println("Inside the condition true block!");
@@ -210,9 +239,21 @@ public class Demo {
 			System.out.println("Inside the condition false block!");
 		}
 		System.out.println("Outside the condition!");
+		*/
 		
 		
-		//else if ladder statement
+		/*	
+		else if Ladder Statement
+			if (condition1) {
+			   block of code to be executed if condition1 is true
+			} else if (condition2) {
+			   block of code to be executed if condition1 is false and condition2 is true
+			} else {
+			   block of code to be executed if both conditions are false
+			}
+		*/
+		
+		/*
 		int score = 78; 
 
         if (score >= 90) {
@@ -226,8 +267,19 @@ public class Demo {
         } else {
             System.out.println("Grade: F (Fail)");
         }
+        */
         
-		//Nested if statement
+		/*
+		Nested if statement
+			if (condition1) {
+			  code to run if condition1 is true
+			  if (condition2) {
+			  code to run if both condition1 and condition2 are true
+			  }
+			}
+		*/
+		
+		/*
 		int a = 10, b=30, c=20;
 		
 		if(a>b) {
@@ -247,6 +299,8 @@ public class Demo {
 			}
 		}
 		
+		*/
+		
 		/*
 		int a = 10, b=30, c=50;
 		if(a>=b && a>=c)
@@ -256,7 +310,7 @@ public class Demo {
 		else
 			System.out.println("C is Greater");
 		*/
-		
+		/*
 		//Nested If
 		String name = "Subashini";
 		char gender = 'F';
@@ -273,65 +327,86 @@ public class Demo {
 		else {
 			System.out.println("Mr." + name);
 		}
+		*/
 		
-		//Switch Statement
-		int day = 4;
+		/*
+		switch Statement
+			switch(expression) {
+			  case x:
+			    // code block
+			    break;
+			  case y:
+			    // code block
+			    break;
+			  default:
+			    // code block
+			}
+		 */
+		
+		/*
+		int day = 6;
 		switch (day) {
 		  case 1:
-		    System.out.println("Monday");
-		    break;
 		  case 2:
-		    System.out.println("Tuesday");
-		    break;
 		  case 3:
-		    System.out.println("Wednesday");
-		    break;
 		  case 4:
-		    System.out.println("Thursday");
-		    break;
 		  case 5:
-		    System.out.println("Friday");
+		    System.out.println("Week Day");
 		    break;
 		  case 6:
-		    System.out.println("Saturday");
-		    break;
 		  case 7:
-		    System.out.println("Sunday");
+		    System.out.println("Weekend");
 		    break;
 		}
+		*/
 	}
-	
 	public static void loopingStatements() throws InterruptedException {
 		/*
-		//while loop statement
+		while Statement
+			while (condition) {
+			   code block to be executed
+			}
+		*/
+		/*
 		int countdown = 10;
 		while (countdown > 0) {
 			TimeUnit.SECONDS.sleep(1);
 			System.out.println(countdown);
 			countdown--;
 		}
-		System.out.println("Happy New Year!!");
+		System.out.println("Happy New Year!");
 		*/
 		
 		/*
-		//Do While loop
+		do while Statement
+			while (condition) {
+			  // code block to be executed
+			}
+		*/
 		
+		/*
 		int i = 6;
-
         do {
             System.out.println("Number: " + i);
             i++; // Increments the counter variable
         } while (i <= 5);
-        */
+		*/
 		
 		/*
-		//For Loop
+		for loop Statement - 3 parts. 1. Initialization, 2. Condition, 3. Increment / Decrement
+			for (statement 1; statement 2; statement 3) {
+			   code block to be executed
+			}
+		*/
+		
+		/*
 		for (int i = 0; i < 5; i++) {
 			  System.out.println(i);
 			}
 		*/
+		
 		/*
-		//Nested Loop
+		//Nested Loop (Loop inside Loop)
 		// Outer loop
 		for (int i = 1; i <= 2; i++) {
 		  System.out.println("Outer: " + i); // Executes 2 times
@@ -340,7 +415,7 @@ public class Demo {
 		  for (int j = 1; j <= 3; j++) {
 		    System.out.println(" Inner: " + j); // Executes 6 times (2 * 3)
 		  }
-		} 
+		}
 		*/
 		/*
 		//Multiplication table
@@ -352,16 +427,36 @@ public class Demo {
 		}
 		*/
 		
-		//https://www.tutorjoes.in/java_programming_tutorial/looping_exercise_programs_in_java#google_vignette
-		
 		//break and continue
 		for (int i = 1; i <= 10; i++) {
-            if(i==5)
+            if(i==5) {
                 continue;
+            }
             System.out.println(i);
-            if(i==8)
+            if(i==8){
                 break;
+            }
         }
+        
+	}
+	public static void primeNumber() {
+		int number;
+		boolean isPrime = true;
+		
+		System.out.println("Enter a Number:");
+		Scanner scanner = new Scanner(System.in);
+		number = scanner.nextInt();
+		for(int i = 2;i<number;i++)
+		{
+			if(number % i == 0) {
+				isPrime = false;
+				break;
+			}
+		}
+		if(isPrime)
+			System.out.println("Given Number is Prime Number");
+		else
+			System.out.println("Given Number is not Prime Number");
 	}
 	public static void kaprekarConstant() {
 		Scanner scanner = new Scanner(System.in);
