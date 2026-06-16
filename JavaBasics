@@ -527,7 +527,97 @@ public class Demo {
 			System.out.print(numbers[i] + " ");
 		}
 	}
+	public static void multiDimension() {
+		/*
+		 * 2D array is organized as matrices which can be represented as the collection of rows and column.
+		 * It is possible to define an array with more than one dimension.
+		 * multidimensional array is accessed by specifying an index for each dimension
+		 * Datatype variable_name [ ] [ ] ;
+		 */
+		//Two Dimension array in Java
+        int a[][] = {
+                {10, 20, 30},
+                {40, 50, 60},
+                {70, 80, 90}
+        };
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(" "+a[i][j]);
+            }
+            System.out.println("");
+        }
+	}
+	public static void jaggedArray() {
+		/*
+		 *  jagged array is an array of arrays such that member arrays can be of different row sizes and column sizes
+		 *  Jagged subarrays may also be null
+		 */
+		//Jagged Array using For Loop in Java Programming
+        int a[][] = {
+                {10, 20, 30, 40},//4
+                {10, 20, 30},//3
+                {10, 20, 30,40, 50}//4
+        };
+ 
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                System.out.print(" "+a[i][j]);
+            }
+            System.out.println("");
+        }
+	}
+	public static void asciiValue() {
+		/*
+	        ASCII  -  American Standard Code For Information Interchange
+	
+	        Computers can only understand numbers,
+	        so an ASCII code is the numerical representation of a character such as 'a' or '@' etc.
+	
+	        The first 32 characters in the ASCII-table
+	        are unprintable control codes and are used to control peripherals such as printers.
+	
+	        Codes 32-127 are common for all the different variations of the ASCII table, they are
+	        called printable characters, represent letters, digits, punctuation marks,
+	        and a few miscellaneous symbols.
+	
+	        65-90  A-Z
+	        97-122 a-z
+	        48-57  0-9
+	        Space  32
+		 */
+		for(int i=65;i<=90;i++)
+        {
+            System.out.println(i+" "+(char)i);
+        }
+	}
+	public static void stringFunctions() {
+		//String in Java
+        String a="John Philip";
+        String b="john philip";
+        System.out.println("A : "+a);
+        System.out.println("B : "+b);
+ 
+        System.out.println("Equals : "+a.equals(b));
+        System.out.println("Equals Ignore Case: "+a.equalsIgnoreCase(b));
 
+        System.out.println("Length: "+a.length());
+        System.out.println("CharAt: "+a.charAt(0));
+        System.out.println("Uppercase: "+a.toUpperCase());
+        System.out.println("Lowercase: "+a.toLowerCase());
+        System.out.println("Replace: "+a.replace("John","Martin"));
+        System.out.println("Contains : " + a.contains("John"));
+        System.out.println("Empty : " + a.isEmpty());
+        System.out.println("EndWith : " + a.endsWith("hn"));
+        System.out.println("StartWith : " + a.startsWith("Jo"));
+        System.out.println("Substring : " + a.substring(5));
+        System.out.println("Substring : " + a.substring(0, 5));
+        char[] carray = a.toCharArray();
+        String c=" John ";
+        System.out.println("Length: "+c.length());
+        System.out.println("C:"+c);
+        System.out.println("C Trim :"+c.trim());
+        System.out.println("C Trim Length:"+c.trim().length());
+	}
 	public static void kaprekarConstant() {
 		Scanner scanner = new Scanner(System.in);
 		int number, asc, desc;
