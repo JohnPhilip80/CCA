@@ -496,9 +496,18 @@ public class Demo {
 		else
 			System.out.println("Given Number is not Prime Number");
 	}
+	public static void swapNumbers() {
+		int a = 4;
+		int b = 7;
+		System.out.println("Before Swap: a=" + a + ",b=" + b);
+		int temp = 0;
+		temp = a;
+		a = b;
+		b = temp;
+		System.out.println("After Swap: a=" + a + ",b=" + b);
+	}
 	public static void sortNumbers() {
 		int[] numbers = {8, 2, 9, 7, 33, 3, 87};
-		
 		System.out.println("Numbers before Sort:");
 		for(int i=0;i<numbers.length;i++) {
 			System.out.print(numbers[i] + " ");
@@ -513,12 +522,10 @@ public class Demo {
 				}
 			}
 		}
-		
 		System.out.println("\nNumbers after Sort:");
 		for(int i=0;i<numbers.length;i++) {
 			System.out.print(numbers[i] + " ");
 		}
-
 	}
 
 	public static void kaprekarConstant() {
