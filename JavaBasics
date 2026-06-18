@@ -1,8 +1,10 @@
-package edu.cca.john.javabasics;
+package edu.cca.john.basics;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Demo {
+
 	public static void main(String[] args) throws InterruptedException{
 		//dataTypes();
 		//arithmeticOperators();
@@ -16,9 +18,136 @@ public class Demo {
 		//mathOperations();
 		//conditionalStatements();
 		//loopingStatements();
-		primeNumber();
+		//primeNumber();
+		//javaArrays();
+		//evenOddCount();
+		//swapNumbers();
+		//sortNumbers();
+		//multiDimension();
+		//jaggedArray();
+		//asciiValue();
+		//stringFunctions();
+		javaMethods();
+		
+	}
+	public static void javaMethods() {
+		/*
+		 * A Java method is a collection of statements that are grouped together to perform an operation.
+		 * A method in Java is a block of code that, when called, performs specific actions mentioned in it.
+		 * You can insert values or parameters into methods, and they will only be executed when called.
+		 * They are also referred to as functions.
+		 * 
+		 * code re-usability
+		 * break a complex program into smaller chunks of code
+		 * increases code readability
+		 * 
+		 * 1. User-defined Methods : We can create our own method based on our requirements.
+		 * 2. Standard Library Methods : These are built-in methods in Java that are available to use.
+		 * 
+		 * Syntax
+		 * Access_ specifier Return_type Method_name ( Parameter list ){
+		 * 		body of method;
+		 * }
+		 * 
+		 * Access Specifiers - Private, Public and Protected
+		 * Return Type - void or datatypes
+		 * Parameter List - list of arguments (data_type variable_name) that will be used in the method
+		 * Method Body - This is the set of instructions enclosed within curly brackets.
+		 * 
+		 */
+		
+		//No Return W/o args
+		addNumber();
+		
+		//No Return With Args
+		subtractNumber(7,2);
+		
+	    //Return Without Args
+		int result = multiplyNumber();
+		System.out.println("Multiplication : " + result);
+		
+		//Return With Args
+		float answer = divideNumber(24,6);
+		System.out.println("Division : " + answer);
+		
+		Scanner scanner = new Scanner(System.in);
+		
+		/*
+		//Recursion Function
+	    //Single Recursion - Method calls itself only once
+		
+        System.out.print("Factorial of what number do you want to calculate? ");
+        int num = scanner.nextInt();
+        System.out.printf("%d! = %d", num, factorial(num));
+        
+        */
+		
+		/*
+		 // Multiple Recursion. Function calls itself more than once
+		 // best for tree traversal such as depth – first search and Fibonacci sequence computation
+		
+		System.out.print("How many numbers in fibonacci series do you want to print? ");
+        int iter = scanner.nextInt();
+        for (int i=0;i<iter;i++) {
+            System.out.print(fibonacci(i) + " ");
+        }
+        */
+		
+		/*
+		//Mutual (or indirect) recursion is when the first function calls a second one, and this second one calls the first one
+		System.out.print("Enter a number: ");
+        int num = scanner.nextInt();
+        
+        if (isEven(num)) 
+        	System.out.println(num + " is even");
+        else 
+        	System.out.println(num + " is odd");
+        */
+        scanner.close();
 	}
 	
+	public static boolean isOdd(int n) {
+		System.out.println("isOdd(" + n + ")");
+        return (n == 0) ? false : isEven(n-1);
+    }
+     
+    public static boolean isEven(int n) {
+    	System.out.println("isEven(" + n + ")");
+        return (n == 0) ? true : isOdd(n-1);
+    }
+	
+	public static long fibonacci(long n) {
+        return (n < 2) ? n : fibonacci(n-1) + fibonacci(n-2);
+    }
+	
+	public static void addNumber() {
+        int a = 123;
+        int b = 10;
+        System.out.println("Addition : " + (a + b));
+    }
+
+    public static void subtractNumber(int x, int y) {
+        System.out.println("Subtraction : " + (x - y));
+    }
+
+    public static int multiplyNumber() {
+        int a = 123;
+        int b = 10;
+        return a * b;
+    }
+    
+    public static float divideNumber(int x, int y) {
+        return (x / y);
+    }
+    
+    public static int factorial(int n)//5!  =1*2*3*4*5=120
+    {
+        if(n<2)
+            return 1;
+        else
+            return (n*factorial(n-1));
+    }
+    
 	public static void dataTypes() {
 		String userName = "John Philip";
 		byte userAge = 30;// 8 bits
@@ -437,45 +566,7 @@ public class Demo {
                 break;
             }
         }
-	}
-	public static void javaArrays() {
-		/*
-		 * An array is a collection of elements of the same type placed in contiguous memory locations 
-		 * that can be individually referenced by using an index to a unique identifier.
-		 * 
-		 * Datatype variable_name [ ] ;
-     		(or)
-     	 * Datatype [ ] variable_name ;
-		 */
-		
-		String[] trainerNames = {"John Philip","Balamurugan", "Sumaiya", "Durka Ramesh", "Subashini"};
-		long[] trainerEmpCodes = {2019250324l,2016240301l,2022250502l,2030250728l,2035250901l};
-		int[] trainerTravelCount = {25,30,20,28,12};
-		float[] trainerExperiences = {1.5f,3.5f,2.5f,2.0f,0.5f};
-		double[] trainerSalaries = {30000.00,35000.00,25000.00,28000.00,22000.00};
-		
-		trainerNames[2] = "Sumaiya Chan";
-		
-		System.out.printf("\n%-15s%-15s%-15s%-20s%-15s","Name","Employee Code","Travel Days", "Experience(Years)", "Salary");
-		
-		/*System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[0],trainerEmpCodes[0],trainerTravelCount[0],trainerExperiences[0],trainerSalaries[0]);
-		System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[1],trainerEmpCodes[1],trainerTravelCount[1],trainerExperiences[1],trainerSalaries[1]);
-		System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[2],trainerEmpCodes[2],trainerTravelCount[2],trainerExperiences[2],trainerSalaries[2]);
-		System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[3],trainerEmpCodes[3],trainerTravelCount[3],trainerExperiences[3],trainerSalaries[3]);
-		*/
-		
-		for(int i=0;i<trainerNames.length;i++) {
-			System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[i],trainerEmpCodes[i],trainerTravelCount[i],trainerExperiences[i],trainerSalaries[i]);
-		}
-		
-		double totalSalary = 0.0d;
-		
-		for(int i=0;i<trainerSalaries.length;i++) {
-			totalSalary += trainerSalaries[i];
-		}
-		
-		System.out.println("\nTotal Salary = " + totalSalary);
-		
+        
 	}
 	public static void primeNumber() {
 		int number;
@@ -496,15 +587,85 @@ public class Demo {
 		else
 			System.out.println("Given Number is not Prime Number");
 	}
-	public static void swapNumbers() {
-		int a = 4;
-		int b = 7;
-		System.out.println("Before Swap: a=" + a + ",b=" + b);
-		int temp = 0;
-		temp = a;
-		a = b;
-		b = temp;
-		System.out.println("After Swap: a=" + a + ",b=" + b);
+	public static void javaArrays() {
+		/*
+		 * An array is a collection of elements of the same type placed in contiguous memory locations 
+		 * that can be individually referenced by using an index to a unique identifier.
+		 * 
+		 * Datatype variable_name [ ] ;
+     		(or)
+     	 * Datatype [ ] variable_name ;
+		 */
+		
+		String[] trainerNames = {
+				"John Philip",
+				"Balamurugan", 
+				"Sumaiya", 
+				"Durka Ramesh", 
+				"Subashini"
+				};
+		long[] trainerEmpCodes = {
+				2019250324l,
+				2016240301l,
+				2022250502l,
+				2030250728l,
+				2035250901l
+				};
+		int[] trainerTravelCount = {25,30,20,28,12};
+		float[] trainerExperiences = {1.5f,3.5f,2.5f,2.0f,0.5f};
+		double[] trainerSalaries = {30000.00,35000.00,25000.00,28000.00,22000.00};
+		
+		trainerNames[2] = "Sumaiya Chan";
+		
+		System.out.printf("\n%-15s%-15s%-15s%-20s%-15s","Name","Employee Code","Travel Days", "Experience(Years)", "Salary");
+		
+		/*System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[0],trainerEmpCodes[0],trainerTravelCount[0],trainerExperiences[0],trainerSalaries[0]);
+		System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[1],trainerEmpCodes[1],trainerTravelCount[1],trainerExperiences[1],trainerSalaries[1]);
+		System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[2],trainerEmpCodes[2],trainerTravelCount[2],trainerExperiences[2],trainerSalaries[2]);
+		System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",trainerNames[3],trainerEmpCodes[3],trainerTravelCount[3],trainerExperiences[3],trainerSalaries[3]);
+		*/
+		
+		for(int i=0;i<trainerNames.length;i++) {
+			System.out.printf("\n%-15s%-15d%-15d%-20.1f%-15.2f",
+					trainerNames[i],
+					trainerEmpCodes[i],
+					trainerTravelCount[i],
+					trainerExperiences[i],
+					trainerSalaries[i]);
+		}
+		
+		double totalSalary = 0.0;
+		double averageSalary = 0.0;
+		
+		for(int i=0;i<trainerSalaries.length;i++) {
+			totalSalary = totalSalary + trainerSalaries[i];
+			//totalSalary += trainerSalaries[i];
+		}
+		averageSalary = totalSalary / trainerSalaries.length;
+		
+		System.out.println("\nTotal (Sum) Salary:" + totalSalary);
+		System.out.println("\nAverage (Avg) Salary:" + averageSalary);
+	}
+	public static void evenOddCount() {
+		int e = 0, o = 0;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter The Limit : ");
+        int n = in.nextInt();
+        int a[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter a[" + i + "] value : ");
+            a[i] = in.nextInt();
+        }
+        for (int element : a) {
+            if (element % 2 == 0) {
+                e++;
+            } else {
+                o++;
+            }
+        }
+        System.out.println("Total Even Nos : " + e);
+        System.out.println("Total Odd Nos  : " + o);
+        in.close();
 	}
 	public static void sortNumbers() {
 		int[] numbers = {8, 2, 9, 7, 33, 3, 87};
@@ -513,6 +674,7 @@ public class Demo {
 		for(i=0;i<numbers.length;i++) {
 			System.out.print(numbers[i] + " ");
 		}
+		
 		for(i=0;i<numbers.length;i++) {
 			for(j=i+1;j<numbers.length; j++) {
 				if(numbers[i] > numbers[j]) {
@@ -522,10 +684,28 @@ public class Demo {
 				}
 			}
 		}
+		
 		System.out.println("\nNumbers after Sort:");
 		for(i=0;i<numbers.length;i++) {
 			System.out.print(numbers[i] + " ");
 		}
+	}
+	public static void swapNumbers() {
+		int a=8;
+		int b=3;
+		
+		System.out.println("Before Swapping: a=" + a + ",b=" + b);
+		
+		/*int t =0;
+		t=a;//t=8
+		a=b;//a=3
+		b=t;//b=8
+		*/
+		a=a*b;// a= 11
+		b=a/b;// b= 8
+		a=a/b;// a= 3
+		
+		System.out.println("After Swapping: a=" + a + ",b=" + b);
 	}
 	public static void multiDimension() {
 		/*
@@ -536,12 +716,14 @@ public class Demo {
 		 */
 		//Two Dimension array in Java
         int a[][] = {
-                {10, 20, 30},
-                {40, 50, 60},
-                {70, 80, 90}
+                {10, 20, 30, 9},
+                {40, 50, 60, 8},
+                {70, 80, 90, 7}
         };
+        a[1][2] = 100;
+        
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 4; j++) {
                 System.out.print(" "+a[i][j]);
             }
             System.out.println("");
@@ -556,7 +738,7 @@ public class Demo {
         int a[][] = {
                 {10, 20, 30, 40},//4
                 {10, 20, 30},//3
-                {10, 20, 30,40, 50}//4
+                {10, 20, 30,40, 50}//5
         };
  
         for (int i = 0; i < a.length; i++) {
@@ -585,7 +767,7 @@ public class Demo {
 	        48-57  0-9
 	        Space  32
 		 */
-		for(int i=65;i<=90;i++)
+		for(int i='a';i<='z';i++)
         {
             System.out.println(i+" "+(char)i);
         }
@@ -593,11 +775,16 @@ public class Demo {
 	public static void stringFunctions() {
 		//String in Java
         String a="John Philip";
-        String b="john philip";
+        String b="John Philip";
+        
+        System.out.println("a==b :" + a==b);
+        System.out.println("Equals : "+a.equals(b));
+        
         System.out.println("A : "+a);
         System.out.println("B : "+b);
  
         System.out.println("Equals : "+a.equals(b));
+        
         System.out.println("Equals Ignore Case: "+a.equalsIgnoreCase(b));
 
         System.out.println("Length: "+a.length());
@@ -617,52 +804,5 @@ public class Demo {
         System.out.println("C:"+c);
         System.out.println("C Trim :"+c.trim());
         System.out.println("C Trim Length:"+c.trim().length());
-	}
-	public static void kaprekarConstant() {
-		Scanner scanner = new Scanner(System.in);
-		int number, asc, desc;
-		System.out.println("Enter a 4 digit Number:"); number = scanner.nextInt();
-		while(number != 6174) {
-			asc = ascendingNumber(number);
-			desc = descendingNumber(number);
-			number = desc - asc;
-			System.out.println(desc);
-			System.out.println(asc);
-			System.out.println("----");
-			System.out.println(number);
-			System.out.println();
-		}
-		scanner.close();
-		
-	}
-	
-	public static int ascendingNumber(int originalNumber) {
-        int sortedNumber = 0;
-	    for (int digitValue = 0; digitValue <= 9; digitValue++) {
-	        int temp = originalNumber;
-	        while (temp > 0) {
-	            int currentDigit = temp % 10;
-	            if (currentDigit == digitValue) {
-	                sortedNumber = (sortedNumber * 10) + currentDigit;
-	            }
-	            temp /= 10;
-	        }
-	    }
-        return sortedNumber;
-	}
-	
-	public static int descendingNumber(int originalNumber) {
-        int sortedNumber = 0;
-    	for (int digitValue = 9; digitValue >= 0; digitValue--) {
-	        int temp = originalNumber;
-	        while (temp > 0) {
-	            int currentDigit = temp % 10;
-	            if (currentDigit == digitValue) {
-	                sortedNumber = (sortedNumber * 10) + currentDigit;
-	            }
-	            temp /= 10;
-	        }
-	    }
-        return sortedNumber;
 	}
 }
