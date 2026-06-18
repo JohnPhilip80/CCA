@@ -105,7 +105,30 @@ public class Demo {
         */
         scanner.close();
 	}
-	
+	public static void fibonacciSeries() {
+		Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of terms: ");
+        int n = scanner.nextInt();
+        
+        int firstTerm = 0;
+        int secondTerm = 1;
+        
+        System.out.print("Fibonacci Series: ");
+        
+        for (int i = 1; i <= n; i++) {
+            // Print the current term
+            System.out.print(firstTerm + " ");
+            
+            // Compute the next term
+            int nextTerm = firstTerm + secondTerm;
+            
+            // Shift the values for the next iteration
+            firstTerm = secondTerm;
+            secondTerm = nextTerm;
+        }
+        
+        scanner.close();
+	}
 	public static boolean isOdd(int n) {
 		System.out.println("isOdd(" + n + ")");
         return (n == 0) ? false : isEven(n-1);
