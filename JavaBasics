@@ -27,7 +27,8 @@ public class Demo {
 		//jaggedArray();
 		//asciiValue();
 		//stringFunctions();
-		javaMethods();
+		//javaMethods();
+		//factorialNumber();
 		
 	}
 	public static void javaMethods() {
@@ -55,7 +56,7 @@ public class Demo {
 		 * Method Body - This is the set of instructions enclosed within curly brackets.
 		 * 
 		 */
-		
+		/*
 		//No Return W/o args
 		addNumber();
 		
@@ -69,8 +70,9 @@ public class Demo {
 		//Return With Args
 		float answer = divideNumber(24,6);
 		System.out.println("Division : " + answer);
+		*/
 		
-		Scanner scanner = new Scanner(System.in);
+		//Scanner scanner = new Scanner(System.in);
 		
 		/*
 		//Recursion Function
@@ -103,7 +105,8 @@ public class Demo {
         else 
         	System.out.println(num + " is odd");
         */
-        scanner.close();
+        //scanner.close();
+        fibonacciSeries();
 	}
 	public static void fibonacciSeries() {
 		Scanner scanner = new Scanner(System.in);
@@ -129,40 +132,45 @@ public class Demo {
         
         scanner.close();
 	}
+	public static void factorialNumber() {
+		Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = scanner.nextInt();
+        long factorial = 1;
+        // Loop from 1 to the given number
+        for (int i = 1; i <= num; i++) {
+            factorial *= i;
+        }
+        System.out.println("Factorial of " + num + " is: " + factorial);
+        scanner.close();
+	}
 	public static boolean isOdd(int n) {
 		System.out.println("isOdd(" + n + ")");
         return (n == 0) ? false : isEven(n-1);
     }
-     
     public static boolean isEven(int n) {
     	System.out.println("isEven(" + n + ")");
         return (n == 0) ? true : isOdd(n-1);
     }
-	
 	public static long fibonacci(long n) {
         return (n < 2) ? n : fibonacci(n-1) + fibonacci(n-2);
     }
-	
 	public static void addNumber() {
         int a = 123;
         int b = 10;
         System.out.println("Addition : " + (a + b));
     }
-
     public static void subtractNumber(int x, int y) {
         System.out.println("Subtraction : " + (x - y));
     }
-
     public static int multiplyNumber() {
         int a = 123;
         int b = 10;
         return a * b;
     }
-    
     public static float divideNumber(int x, int y) {
         return (x / y);
     }
-    
     public static int factorial(int n)//5!  =1*2*3*4*5=120
     {
         if(n<2)
@@ -170,7 +178,6 @@ public class Demo {
         else
             return (n*factorial(n-1));
     }
-    
 	public static void dataTypes() {
 		String userName = "John Philip";
 		byte userAge = 30;// 8 bits
@@ -225,7 +232,6 @@ public class Demo {
 		System.out.println("Assignment Operations");
 		System.out.println("Value of x is: " + x);
 	}
-	
 	public static void relationalOperators() {
 		/*
 			== (Equal to)
@@ -589,7 +595,6 @@ public class Demo {
                 break;
             }
         }
-        
 	}
 	public static void primeNumber() {
 		int number;
